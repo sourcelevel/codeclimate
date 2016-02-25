@@ -2,7 +2,7 @@ PATH
   remote: .
   specs:
     codeclimate (0.34.1)
-      activesupport (~> 4.2, >= 4.2.1)
+      activesupport (>= 4.2.1, < 5.1)
       codeclimate-yaml (~> 0.9.0)
       highline (~> 1.7, >= 1.7.2)
       posix-spawn (~> 0.3, >= 0.3.11)
@@ -81,4 +81,4 @@ DEPENDENCIES
   rspec_junit_formatter
 
 BUNDLED WITH
-   1.11.2
+   1.12.5
