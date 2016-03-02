@@ -6,7 +6,6 @@ PATH
       codeclimate-yaml (~> 0.9.0)
       highline (~> 1.7, >= 1.7.2)
       posix-spawn (~> 0.3, >= 0.3.11)
-      pry (~> 0.10.1)
       rainbow (~> 2.0, >= 2.0.0)
       redcarpet (~> 3.2)
       tty-spinner (~> 0.1.0)
@@ -76,6 +75,7 @@ PLATFORMS
 DEPENDENCIES
   codeclimate!
   codeclimate-test-reporter
+  pry (~> 0.10.1)
   rake
   rspec
   rspec_junit_formatter
