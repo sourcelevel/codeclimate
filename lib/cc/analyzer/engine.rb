@@ -8,7 +8,7 @@ module CC
 
       attr_reader :name
 
-      DEFAULT_MEMORY_LIMIT = 1_024_000_000
+      DEFAULT_MEMORY_LIMIT = 1_024_000_000.freeze
 
       def initialize(name, metadata, code_path, config, label)
         @name = name
