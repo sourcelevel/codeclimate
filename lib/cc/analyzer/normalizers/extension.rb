@@ -2,7 +2,6 @@ module CC
   module Analyzer
     module Normalizers
       class Extension
-
         attr_reader :name, :extensions, :code_path
 
         def initialize(name, available_extensions = [], code_path)
