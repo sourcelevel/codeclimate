@@ -61,6 +61,27 @@ module CC::Analyzer
       end
     end
 
+    describe "with an extension specs for channel" do
+      it "selects the proper image" do
+        name = "an_engine"
+        registry = registry_with_engine(name)
+
+        registry[name]["channels"]["beta"] = {
+          "image" => "images/beta",
+          "extensions" => [
+            "an_engine/my_ext"
+          ]
+        }
+
+        config = config_with_engine(name)
+        config.engines[name].channel = "beta"
+
+        result = build_configs(registry, config).first
+
+        expect(result.registry_entry["image"]).to eq "images/beta"
+      end
+    end
+
     describe "with engine-specific config" do
       let(:config) do
         CC::Yaml.parse <<-EOYAML
