@@ -5,7 +5,7 @@ module CC
     module Normalizers
       module Extensions
         class RubocopExtension
-          CONFIG_FILE_PATH = '.rubocop.yml'.freeze
+          CONFIG_FILE_PATH = ".rubocop.yml".freeze
 
           attr_reader :available_extensions, :code_path
 
