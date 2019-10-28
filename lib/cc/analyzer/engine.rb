@@ -117,14 +117,14 @@ module CC
       end
 
       # Removes unsuported extensions from each
-      # engine config file according with suplied channel
+      # engine config file according with supplied channel
       def normalize_engine_extensions!
         return unless @metadata["channels"]
 
         channel_metadata = @metadata["channels"][channel_name]
         extensions = channel_metadata["extensions"] || []
 
-        Normalizers::Extension.new(name, extensions, @code_path).call
+        ::CC::Analyzer::Normalizers::Extension.new(name, extensions, @code_path).call
       end
     end
   end
