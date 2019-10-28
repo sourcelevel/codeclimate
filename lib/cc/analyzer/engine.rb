@@ -19,6 +19,8 @@ module CC
       end
 
       def run(stdout_io, container_listener)
+        normalize_engine_extensions!
+
         composite_listener = CompositeContainerListener.new(
           container_listener,
           LoggingContainerListener.new(qualified_name, Analyzer.logger),
@@ -64,7 +66,11 @@ module CC
       private
 
       def qualified_name
-        "#{name}:#{@config.fetch("channel", "stable")}"
+        "#{name}:#{channel_name}"
+      end
+
+      def channel_name
+        @config.fetch("channel", "stable").to_s
       end
 
       def container_options
@@ -108,6 +114,17 @@ module CC
       # Memory limit for a running engine in bytes
       def memory_limit
         (ENV["ENGINE_MEMORY_LIMIT_BYTES"] || DEFAULT_MEMORY_LIMIT).to_s
+      end
+
+      # Removes unsuported extensions from each
+      # engine config file according with suplied channel
+      def normalize_engine_extensions!
+        return unless @metadata["channels"]
+
+        channel_metadata = @metadata["channels"][channel_name]
+        extensions = channel_metadata["extensions"] || []
+
+        Normalizers::Extension.new(name, extensions, @code_path).call
       end
     end
   end
