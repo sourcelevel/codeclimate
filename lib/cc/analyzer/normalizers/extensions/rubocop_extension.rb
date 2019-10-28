@@ -15,18 +15,16 @@ module CC
           end
 
           def call
-            begin
-              extensions = config_file["require"]
+            extensions = config_file["require"]
 
-              return if extensions.empty?
+            return if extensions.empty?
 
-              supported_extensions = available_extensions & extensions
+            supported_extensions = available_extensions & extensions
 
-              config_file["require"] = supported_extensions
+            config_file["require"] = supported_extensions
 
-              normalize!
-            rescue Errno::ENOENT
-            end
+            normalize!
+          rescue Errno::ENOENT
           end
 
           private
