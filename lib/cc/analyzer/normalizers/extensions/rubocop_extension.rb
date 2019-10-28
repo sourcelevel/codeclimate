@@ -17,7 +17,7 @@ module CC
           def call
             extensions = config_file["require"]
 
-            return if extensions.empty?
+            return if extensions.blank?
 
             supported_extensions = available_extensions & extensions
 
