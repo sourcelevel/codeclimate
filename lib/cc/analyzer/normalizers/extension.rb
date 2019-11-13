@@ -25,7 +25,7 @@ module CC
         end
 
         def engine_normalizer_const
-          "#{namespace}::Extensions::#{name.capitalize}Extension"
+          "#{namespace}::Extensions::#{name.underscore.classify}Extension"
         end
       end
     end
