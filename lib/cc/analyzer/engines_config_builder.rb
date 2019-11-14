@@ -12,7 +12,19 @@ module CC
         # handling.
         def fetch(name, channel)
           metadata = self[name]
-          metadata.merge("image" => metadata["channels"][channel.to_s])
+          metadata.merge("image" => image_data(metadata["channels"], channel))
+        end
+
+        private
+
+        def image_data(channels, channel)
+          channel = channels[channel.to_s]
+
+          if channel.is_a?(Hash) && channel.key?("image")
+            return channel["image"]
+          end
+
+          channel
         end
       end
 

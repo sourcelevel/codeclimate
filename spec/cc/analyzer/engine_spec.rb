@@ -124,6 +124,62 @@ module CC::Analyzer
           expect(stdout.string).to include %{"severity":"info"}
         end
       end
+
+      it "when using engine without extension definition" do
+        container = double
+        allow(container).to receive(:on_output).and_yield("")
+        allow(container).to receive(:run).and_return(
+          Container::Result.new(0, false, 1, false, 10, ""),
+        )
+
+        expect(Container).to receive(:new) do |args|
+          expect(args[:image]).to eq "codeclimate/foo"
+          expect(args[:command]).to eq "bar"
+          expect(args[:name]).to match(/^cc-engines-foo/)
+        end.and_return(container)
+
+        metadata = {
+          "image" => "codeclimate/foo",
+          "command" => "bar",
+          "channels" => {
+            "stable" => "codeclimate/foo"
+          }
+        }
+
+        engine = Engine.new("foo", metadata, "/code", {}, "")
+        engine.run(StringIO.new, ContainerListener.new)
+      end
+
+      it "when using engine with extensions definition" do
+        container = double
+        allow(container).to receive(:on_output).and_yield("")
+        allow(container).to receive(:run).and_return(
+          Container::Result.new(0, false, 1, false, 10, ""),
+        )
+
+        expect(Container).to receive(:new) do |args|
+          expect(args[:image]).to eq "codeclimate/foo"
+          expect(args[:command]).to eq "bar"
+          expect(args[:name]).to match(/^cc-engines-foo/)
+        end.and_return(container)
+
+        metadata = {
+          "image" => "codeclimate/foo",
+          "command" => "bar",
+          "channels" => {
+            "stable" => {
+              "image" => "codeclimate/foo",
+              "extensions" => [
+                "rubocop/migrations",
+                "rubocop-rspec"
+              ]
+            }
+          }
+        }
+
+        engine = Engine.new("foo", metadata, "", {}, "")
+        engine.run(StringIO.new, ContainerListener.new)
+      end
     end
   end
 end

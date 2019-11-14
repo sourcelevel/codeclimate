@@ -44,11 +44,36 @@ module CC::Analyzer
       end
     end
 
+    describe "when registry follows extension spec format" do
+      it "builds and runs enabled engines from the registry with the formatter" do
+        config = config_with_engine("an_engine")
+        registry = registry_with_engine("an_engine", exts: ["an_engine/my_ext"])
+        formatter = null_formatter
+
+        expect_engine_run("an_engine", "/code", formatter)
+
+        EnginesRunner.new(registry, formatter, "/code", config).run
+      end
+    end
+
     def registry_with_engine(name)
       {
         name => {
           "channels" => {
             "stable" => "codeclimate/codeclimate-#{name}"
+          }
+        }
+      }
+    end
+
+    def registry_with_engine(name, exts: [])
+      {
+        name => {
+          "channels" => {
+            "stable" => {
+              "image" => "codeclimate/codeclimate-#{name}",
+              "extensions" => exts
+            }
           }
         }
       }
