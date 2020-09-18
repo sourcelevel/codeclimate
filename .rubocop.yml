@@ -3,9 +3,5 @@ inherit_from: base_rubocop.yml
 AllCops:
   TargetRubyVersion: 2.2
 
-Lint/Debugger:
-  Exclude:
-  - lib/cc/cli/console.rb
-
 Style/SpecialGlobalVars:
   Enabled: false
