@@ -8,7 +8,6 @@ require "cc/yaml"
 
 require "cc/cli/analyze"
 require "cc/cli/command"
-require "cc/cli/console"
 require "cc/cli/engines"
 require "cc/cli/help"
 require "cc/cli/init"
