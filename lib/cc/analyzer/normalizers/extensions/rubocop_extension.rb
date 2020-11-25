@@ -19,7 +19,7 @@ module CC
 
             return if extensions.blank?
 
-            supported_extensions = available_extensions & extensions
+            supported_extensions = available_extensions & ([] << extensions).flatten
 
             config_file["require"] = supported_extensions
 
