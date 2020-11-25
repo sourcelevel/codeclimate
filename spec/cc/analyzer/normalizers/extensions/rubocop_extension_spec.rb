@@ -36,6 +36,33 @@ module CC::Analyzer::Normalizers::Extensions
         expect(normalized_extensions.size).to eq(2)
       end
 
+      it "supports extensions inline syntax" do
+        available_extensions = [
+          "rubocop-performance",
+          "rubocop/migrations",
+          "rubocop-rails"
+        ]
+
+        rubocop_config_content = <<-eos
+          require: rubocop/migrations
+
+          AllCops:
+            Exclude:
+              - 'bin/**/*'
+
+          RandomCheck:
+            Enabled: true
+        eos
+
+        path = "/tmp/code"
+        make_file("#{path}/.rubocop.yml", rubocop_config_content)
+
+        RubocopExtension.new(available_extensions, path).call
+
+        normalized_extensions = YAML.load_file("#{path}/.rubocop.yml")["require"]
+        expect(normalized_extensions.size).to eq(1)
+      end
+
       it "ignores process when there is no config file" do
         expect { RubocopExtension.new(available_extensions, "/tmp/code").call }.to_not raise_error
       end
